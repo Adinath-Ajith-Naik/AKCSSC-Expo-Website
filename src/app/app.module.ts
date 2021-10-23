@@ -7,8 +7,8 @@ import { SigninComponent } from './pages/signin/signin.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { VoteComponent } from './pages/vote/vote.component';
-import { PostsComponent } from './pages/adminPanel/posts/posts.component';
-import { CategoryComponent } from './pages/adminPanel/category/category.component';
+import { PostsComponent } from './pages/admin-panel/posts/posts.component';
+import { CategoryComponent } from './pages/admin-panel/category/category.component';
 
 @NgModule({
   declarations: [
