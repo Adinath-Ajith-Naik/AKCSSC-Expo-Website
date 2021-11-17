@@ -7,6 +7,8 @@ import{HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { HttpAPIInterceptor } from './shared/interceptor/http.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ModalModule.forRoot()
 
   ],
   providers: [

@@ -1,41 +1,16 @@
-<!-- <p>posts works!</p>
-
-<form [formGroup]="postForm">
-    <label for="startupname">Startup Name: </label>
-    <input id="startupname" type="text" formControlName="startupname" />
-
-    <label for="location">Logo </label>
-    <input id="logo" type="logo" formControlName="logo" />
-
-    <label for="category">Category </label>
-    <select name="" id="" formControlName="category">
-    <option value="categ">catg</option>
-  </select>
-
-    <label for="content">Caption </label>
-    <input id="content" type="text" formControlName="caption" />
-
-    <label for="image">Image </label>
-    <input id="image" type="image" formControlName="image" />
-
-    <button type="button" (click)="createPost(postForm.value)">Add Post</button>
-</form> -->
-<!-- spinner -->
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-multiple" [fullScreen]="true">
-    <p style="color: white; padding-top: '50px';"> Loading... </p>
-</ngx-spinner>
-
 <div class="container-fluid">
     <!-- modal open for create post -->
     <div class="row justify-content-center justify-content-lg-end mt-5">
         <div class="col-12 col-md-4 text-center">
-            <button class="btn btn-lg btn-success"> ADD NEW POST</button>
+            <button class="btn btn-lg btn-success" (click)="openModal()">
+        ADD NEW POST
+      </button>
         </div>
     </div>
 
     <!-- listing previous posts -->
     <div class="row" *ngIf="!postsLoading">
-        <div class="col-12 col-lg-4" *ngFor="let post of posts; let i = index;">
+        <div class="col-12 col-lg-4" *ngFor="let post of posts; let i = index">
             <div class="row col-12 p-4 justify-content-center">
                 <div class="card shadow p-2">
                     <div class="row justify-content-center">
@@ -48,11 +23,12 @@
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5>{{post.startup}}</h5>
+                                        <h5>{{ post.startup }}</h5>
                                         <p>Category</p>
                                         <div class="col-12">
                                             <div class="row">
-                                                <div class="col-6 text-start">{{post.likes}} likes.
+                                                <div class="col-6 text-start">
+                                                    {{ post.likes }} likes.
                                                 </div>
                                                 <div class="col-6 text-end">
                                                     <button class="btn btn-success btn-sm">like</button>

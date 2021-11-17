@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Create Category</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="categoryForm">
+        <label for="categoryname">Category Name: </label>
+        <input id="categoryname" type="text" formControlName="category" />
+        <button type="button" (click)="createCategory(categoryForm.value)">
+        Add
+      </button>
+    </form>
+</div>

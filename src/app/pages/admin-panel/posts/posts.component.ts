@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CommonResponse } from 'src/app/shared/models/acknowledgement.model';
@@ -11,6 +10,7 @@ import {
   Post,
 } from 'src/app/shared/models/post.model';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { CreatePostComponent } from './create-post/create-post.component';
 
 @Component({
   selector: 'app-posts',
@@ -20,22 +20,25 @@ import { CommonService } from 'src/app/shared/services/common.service';
 export class PostsComponent implements OnInit {
   postsLoading: boolean = true;
   posts: Post[] = [] as Post[];
-  postForm: FormGroup = new FormGroup({
-    startupname: new FormControl(''),
-    logo: new FormControl(''),
-    category: new FormControl(''),
-    caption: new FormControl(''),
-    image: new FormControl(''),
-  });
+  modalRef?: BsModalRef;
 
   constructor(
     private toast: ToastrService,
     private commonService: CommonService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private modalService: BsModalService
   ) {}
 
   ngOnInit(): void {
     this.fetchAllPost();
+  }
+
+  openModal() {
+    this.modalRef = this.modalService.show(CreatePostComponent);
+    this.modalRef.onHide?.subscribe((event)=>{
+      this.fetchAllPost();
+      
+    })
   }
 
   public fetchAllPost() {

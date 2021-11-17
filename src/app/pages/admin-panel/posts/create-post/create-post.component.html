@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Create Post</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="postForm">
+        <label for="startupname">Startup Name: </label>
+        <input class="form-control" id="startupname" type="text" formControlName="startupname" />
+
+        <label for="logo">Logo </label>
+        <input class="form-control" id="logo" type="file" formControlName="logo" />
+
+        <label for="category">Category </label>
+        <select class="form-control" name="" id="" formControlName="category">
+      <option value="categ">catg</option>
+    </select>
+
+        <label for="content">Caption </label>
+        <input class="form-control" id="content" type="text" formControlName="caption" />
+
+        <label for="image">Image </label>
+        <input class="form-control" id="image" type="file" formControlName="image" />
+
+        <button type="button" (click)="createPost(postForm.value)">Add Post</button>
+    </form>
+</div>

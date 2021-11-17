@@ -1,10 +1,27 @@
-<p>category works!</p>
+<div class="container-fluid">
+    <!-- modal open for create post -->
+    <div class="row justify-content-center justify-content-lg-end mt-5">
+        <div class="col-12 col-md-4 text-center">
+            <button class="btn btn-lg btn-success" (click)="openModal()">ADD NEW Category</button>
+        </div>
+    </div>
 
-<form [formGroup]="categoryForm">
-    <label for="categoryname">Category Name: </label>
-    <input id="categoryname" type="text" formControlName="categoryname">
-
-
-    <button type="button" (click)="createCategory(categoryForm.value)">Add</button>
-
-</form>
+    <table class="table table-stripped mt-3">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Category</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let category of categories; let i = index">
+                <td class="text-center">
+                    {{ i + 1 }}
+                </td>
+                <td class="text-center">{{category.category}}</td>
+                <td class="text-center"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

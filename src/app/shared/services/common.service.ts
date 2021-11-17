@@ -3,10 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Acknowledgement, CommonResponse } from '../models/acknowledgement.model';
 import {
-  createCategoryRequest,
-  createCategoryResponse,
-  updateCategoryRequest,
-  updateCategoryResponse,
+  CreateCategoryRequest, GetCategoryResponse,
 } from '../models/category.model';
 import {
   CreatePostRequest,
@@ -29,19 +26,19 @@ export class CommonService {
 
   //Category
 
-  public createCategory(createCategoryRequest: createCategoryRequest) {
-    return this.http.post<createCategoryResponse>(
+  public createCategory(createCategoryRequest: CreateCategoryRequest) {
+    return this.http.post<GetCategoryResponse>(
       `${this.baseUrl}/category`,
       createCategoryRequest
     );
   }
 
   public getCategory() {
-    return this.http.get(`${this.baseUrl}/category`);
+    return this.http.get<GetCategoryResponse>(`${this.baseUrl}/category`);
   }
 
-  public updateCategory(updateCategoryRequest: updateCategoryRequest) {
-    return this.http.put<updateCategoryResponse>(
+  public updateCategory(updateCategoryRequest: CreateCategoryRequest) {
+    return this.http.put<CommonResponse>(
       `${this.baseUrl}/category/:id`,
       updateCategoryRequest
     );
