@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import{HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { HttpAPIInterceptor } from './shared/interceptor/http.interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot() 
+    ToastrModule.forRoot(),
+    NgxSpinnerModule
 
   ],
   providers: [

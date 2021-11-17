@@ -4,6 +4,7 @@ import { CategoryComponent } from './category/category.component';
 import { PostsComponent } from './posts/posts.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminPanelComponent } from './admin-panel.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   { path: '', component: AdminPanelComponent },
