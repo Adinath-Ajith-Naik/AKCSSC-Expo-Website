@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { createCategoryResponse, getCategoryResponse } from 'src/app/shared/models/category.model';
+import { createCategoryResponse, getCategoryResponse, updateCategoryResponse } from 'src/app/shared/models/category.model';
 import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
@@ -11,6 +12,10 @@ import { CommonService } from 'src/app/shared/services/common.service';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
+
+  categoryForm: FormGroup = new FormGroup({
+    categoryName: new FormControl('')
+  })
 
   constructor(
     //service inject
@@ -48,7 +53,24 @@ export class CategoryComponent implements OnInit {
   public fetchCategoryById(){
     //fetch by id
 
+    this.commonService.getSinglePost().subscribe(
+      (fetchCategoryById:any) => {
+        if(fetchCategoryById.acknowledgement.status === 'SUCCESS'){
 
+        }else{
+          this.toast.error(
+            fetchCategoryById.acknowledgement.message,
+            fetchCategoryById.acknowledgement.status,
+          );
+        }
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.error(
+          err.error.acknowledgement.message,
+          err.error.acknowledgement.status
+        );
+      }
+    )
   }
 
   public createCategory(values: any){
@@ -76,6 +98,26 @@ export class CategoryComponent implements OnInit {
 
   //update
 
+  public updateCategory(values:any){
+    this.commonService.updateCategory(values).subscribe(
+      (updateCategory:updateCategoryResponse) => {
+        if(updateCategory.acknowledgement.status === 'SUCCESS'){
+          //Updated Category
+        }else{
+          this.toast.error(
+            updateCategory.acknowledgement.message,
+            updateCategory.acknowledgement.status
+          );
+        }
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.error(
+          err.error.acknowledgement.message,
+          err.error.acknowledgement.status
+        );
+      }
+    )
+  }
 
   
   public deleteCategory(){

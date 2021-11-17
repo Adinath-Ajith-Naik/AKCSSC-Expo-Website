@@ -1,1 +1,10 @@
 <p>category works!</p>
+
+<form [formGroup]="categoryForm">
+    <label for="categoryname">Category Name: </label>
+    <input id="categoryname" type="text" formControlName="categoryname">
+
+
+    <button type="button" (click)="createCategory(categoryForm.value)">Add</button>
+
+</form>
