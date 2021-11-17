@@ -1,1 +1,12 @@
 <p>signin works!</p>
+
+<form [formGroup]="loginForm">
+    <label for="username">UserName: </label>
+    <input id="username" type="text" formControlName="username">
+
+    <label for="password">Password </label>
+    <input id="password" type="password" formControlName="password">
+
+    <button type="button" (click)="login(loginForm.value)">Log In</button>
+
+</form>

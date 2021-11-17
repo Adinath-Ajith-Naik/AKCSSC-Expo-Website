@@ -1,1 +1,24 @@
 <p>posts works!</p>
+
+<form [formGroup]="postForm">
+    <label for="startupname">Startup Name: </label>
+    <input id="startupname" type="text" formControlName="startupname">
+
+    <label for="location">Logo </label>
+    <input id="logo" type="logo" formControlName="logo">
+
+    <label for="category">Category </label>
+    <!-- <input id="category" type="text" formControlName="category"> -->
+    <select name="" id="" formControlName="category">
+        <option value="categ">catg</option>
+    </select>
+
+    <label for="content">Caption </label>
+    <input id="content" type="text" formControlName="caption">
+
+    <label for="image">Image </label>
+    <input id="image" type="image" formControlName="image">
+
+    <button type="button" (click)="createPost(postForm.value)">Add Post</button>
+
+</form>
