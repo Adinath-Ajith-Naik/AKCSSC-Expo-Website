@@ -7,22 +7,67 @@
 <div class="modal-body">
     <form [formGroup]="postForm">
         <label for="startupname">Startup Name: </label>
-        <input class="form-control" id="startupname" type="text" formControlName="startupname" />
+        <input class="form-control" id="startupname" type="text" formControlName="startupname" [ngClass]="{
+        'input-error':
+          startupname?.invalid && (startupname?.dirty || startupname?.touched)
+      }" placeholder="Startup Name" />
+        <p *ngIf="
+        startupname?.invalid && (startupname?.dirty || startupname?.touched)
+      " class="text-danger">
+            <i class="uil uil-exclamation-circle"></i>
+            <span *ngIf="startupname?.errors?.required">
+        Startup Name is Required</span
+      >
+    </p>
 
-        <label for="logo">Logo </label>
-        <input class="form-control" id="logo" type="file" formControlName="logo" />
+    <label for="logo">Logo </label>
+    <input class="form-control" id="logo" type="file" formControlName="logo" (change)="uploadLogoImage($event)" accept="image/*" />
 
-        <label for="category">Category </label>
-        <select class="form-control" name="" id="" formControlName="category">
-      <option value="categ">catg</option>
+    <label
+      for="category"
+      
+      >Category
+    </label>
+    <select
+      class="form-control"
+      name="category"
+      id="category"
+      formControlName="category"
+      [ngClass]="{
+        'input-error': category?.invalid && (category?.dirty || category?.touched)
+      }"
+    >
+      <option value='' disabled selected>select Catgory</option>
+      <option value="{{cat._id}}" *ngFor="let cat of categories">{{cat.category}}</option>
     </select>
+    <p
+      *ngIf="category?.invalid && (category?.dirty || category?.touched)"
+      class="text-danger"
+    >
+      <i class="uil uil-exclamation-circle"></i>
+      <span *ngIf="category?.errors?.required"> category is Required</span>
+        </p>
 
         <label for="content">Caption </label>
-        <input class="form-control" id="content" type="text" formControlName="caption" />
+        <input class="form-control" id="content" type="text" formControlName="caption" [ngClass]="{
+        'input-error': caption?.invalid && (caption?.dirty || caption?.touched)
+      }" placeholder="Caption" />
+        <p *ngIf="caption?.invalid && (caption?.dirty || caption?.touched)" class="text-danger">
+            <i class="uil uil-exclamation-circle"></i>
+            <span *ngIf="caption?.errors?.required"> Caption is Required</span>
+        </p>
 
         <label for="image">Image </label>
-        <input class="form-control" id="image" type="file" formControlName="image" />
+        <input class="form-control" id="image" type="file" formControlName="image" (change)="uploadImage($event)" accept="image/*" [ngClass]="{
+        'input-error': image?.invalid && (image?.dirty || image?.touched)
+      }" placeholder="Product Name" />
+        <p *ngIf="image?.invalid && (image?.dirty || image?.touched)" class="text-danger">
+            <i class="uil uil-exclamation-circle"></i>
+            <span *ngIf="image?.errors?.required"> Please Upload the Image</span>
+        </p>
 
-        <button type="button" (click)="createPost(postForm.value)">Add Post</button>
+        <button type="button" class="btn btn-md btn-success mt-2" (click)="createPost(postForm.value)" [disabled]="postForm.invalid">
+      Add Post
+    </button>
     </form>
 </div>

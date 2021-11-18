@@ -2,11 +2,14 @@
     <!-- modal open for create post -->
     <div class="row justify-content-center justify-content-lg-end mt-5">
         <div class="col-12 col-md-4 text-center">
-            <button class="btn btn-lg btn-success" (click)="openModal()">ADD NEW Category</button>
+            <button class="btn btn-lg btn-success" (click)="openModal()">
+        ADD NEW Category
+      </button>
         </div>
     </div>
 
     <table class="table table-stripped mt-3">
+        <caption></caption>
         <thead>
             <tr>
                 <th class="text-center">#</th>
@@ -19,8 +22,11 @@
                 <td class="text-center">
                     {{ i + 1 }}
                 </td>
-                <td class="text-center">{{category.category}}</td>
-                <td class="text-center"></td>
+                <td class="text-center">{{ category.category }}</td>
+                <td class="text-center">
+                    <i class="uil uil-trash text-danger mx-1" (click)="deleteCategory(category._id)"></i>
+                    <i class="uil uil-edit-alt text-primary mx-1" (click)="openUpdateModal(category)"></i>
+                </td>
             </tr>
         </tbody>
     </table>

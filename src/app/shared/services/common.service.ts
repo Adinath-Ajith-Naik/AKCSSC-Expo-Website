@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Acknowledgement, CommonResponse } from '../models/acknowledgement.model';
@@ -44,8 +44,15 @@ export class CommonService {
     );
   }
 
-  public deleteCategory() {
-    return this.http.delete(`${this.baseUrl}/category/:id`);
+  public updateCategoryFunction(updateCategoryRequest: CreateCategoryRequest,id:string) {
+    return this.http.put<CommonResponse>(
+      `${this.baseUrl}/category/${id}`,
+      updateCategoryRequest
+    );
+  }
+
+  public deleteCategory(id:string) {
+    return this.http.delete(`${this.baseUrl}/category/${id}`);
   }
 
   // Post

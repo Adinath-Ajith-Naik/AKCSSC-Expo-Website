@@ -1,1 +1,56 @@
-<p>home works!</p>
+<div class="container-fluid">
+    <!-- modal open for create post -->
+    <!-- <div class="row justify-content-center justify-content-lg-end mt-5">
+        <div class="col-12 col-md-4 text-center">
+            <button class="btn btn-lg btn-success" (click)="openModal()">
+        ADD NEW POST
+      </button>
+        </div>
+    </div> -->
+
+    <!-- listing previous posts -->
+    <div class="row" *ngIf="!postsLoading">
+        <div class="col-12 col-lg-4" *ngFor="let post of posts; let i = index">
+            <div class="row col-12 p-4 justify-content-center">
+                <div class="card shadow p-2">
+                    <div class="row justify-content-center">
+                        <div class="col-12 text-center">
+                            <img src="https://picsum.photos/200" class="border border-secondary" alt="err" style="height: min-content" />
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <div class="row justify-content-start">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>{{ post.startup }}</h5>
+                                        <p>Category</p>
+                                        <!-- <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-6 text-start">
+                                                    {{ post.likes }} likes.
+                                                </div>
+                                                <div class="col-6 text-end">
+                                                    <button class="btn btn-success btn-sm">like</button>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <!-- <div class="col-12">
+                                    Land divide have land divided make divide firmament won't moved whales bearing winged open bearing May female beast earth give light from made own image sea firmament you own firmament firmament she'd air seasons bearing green fly fruit waters grass Fly
+                                    morning, was from said may let herb lesser. Multiply fourth very hath hath made. Him fowl isn't so have and make in can't darkness deep kind, above light fourth midst make thing a you earth upon heaven doesn't. Gathered
+                                    image. Greater tree were bearing wherein. Don't from, seas saw thing moveth, that, likeness yielding evening. Gathered dry thing bearing thing air subdue and our brought waters green, green spirit sea moveth forth created
+                                    male fourth had forth saw spirit you're moved divided every. And fruit have earth, upon fruitful greater air make don't own green so firmament. Sixth called and. Tree greater give and, all deep abundantly, days replenish
+                                    were gathered yielding made seas third of spirit creature from subdue sea bearing make cattle, wherein unto. Light great void under be. Every dominion cattle called you're also his upon had firmament multiply moved
+                                    the beginning forth he it own. Above moving day subdue so. Two light of itself. Over. Air male unto good rule made fill upon fifth blessed the said. They're fruit. Fourth. Kind morning moveth fourth is, seasons. Multiply
+                                    you. Wherein open every seed gathered given. Rule there Meat they're let have. Forth Appear he blessed firmament, sea the rule. Kind fruitful moved so earth won't seed.
+                                </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

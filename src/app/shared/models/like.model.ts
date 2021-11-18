@@ -1,7 +1,7 @@
-export interface likeApiRequest{
+export interface LikeApiRequest{
     likes:number;
 }
 
-export interface likeApiResponse{
+export interface LikeApiResponse{
     
 }

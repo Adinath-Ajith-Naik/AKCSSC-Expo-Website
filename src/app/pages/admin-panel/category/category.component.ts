@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CommonResponse } from 'src/app/shared/models/acknowledgement.model';
@@ -39,6 +39,18 @@ export class CategoryComponent implements OnInit {
 
   openModal() {
     this.modalRef = this.modalService.show(CreateCategoryComponent);
+    this.modalRef.onHide?.subscribe((event) => {
+      this.fetchAllCategory();
+    });
+  }
+
+  openUpdateModal(category: Category) {
+    let modalOptions: ModalOptions = {
+      initialState:{
+        Updatecategory: category,
+      }
+    };
+    this.modalRef = this.modalService.show(CreateCategoryComponent, modalOptions);
     this.modalRef.onHide?.subscribe((event) => {
       this.fetchAllCategory();
     });
@@ -139,11 +151,12 @@ export class CategoryComponent implements OnInit {
     );
   }
 
-  public deleteCategory() {
+  public deleteCategory(id: string) {
     //delete catergery
-    this.commonService.deleteCategory().subscribe(
+    this.commonService.deleteCategory(id).subscribe(
       (deleteCategory: any) => {
         if (deleteCategory.acknowledgement.status === 'SUCCESS') {
+          this.fetchAllCategory();
         } else {
           this.toast.error(
             deleteCategory.acknowledgement.message,
