@@ -10,7 +10,7 @@ export interface Post {
   caption: string;
   media: string;
   likes: number;
-  Category: string;
+  category: string;
 }
 
 export interface CreatePostResponse {

@@ -38,7 +38,7 @@
       }"
     >
       <option value='' disabled selected>select Catgory</option>
-      <option value="{{cat._id}}" *ngFor="let cat of categories">{{cat.category}}</option>
+      <option value="{{cat.category}}" *ngFor="let cat of categories">{{cat.category}}</option>
     </select>
     <p
       *ngIf="category?.invalid && (category?.dirty || category?.touched)"

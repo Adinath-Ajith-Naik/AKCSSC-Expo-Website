@@ -121,7 +121,7 @@ export class CreatePostComponent implements OnInit {
     let createPostRequest: CreatePostRequest = {} as CreatePostRequest;
     let post: Post = {} as Post;
     post.startup = values.startupname;
-    post.Category = values.category;
+    post.category = values.category;
     post.caption = values.caption;
     post.likes = 0;
     this.uploadtoFB(values.startupname).then(() => {

@@ -4,6 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CommonResponse } from 'src/app/shared/models/acknowledgement.model';
+import { Category, GetCategoryResponse } from 'src/app/shared/models/category.model';
 import {
   CreatePostResponse,
   GetPostResponse,
@@ -21,6 +22,7 @@ export class PostsComponent implements OnInit {
   postsLoading: boolean = true;
   posts: Post[] = [] as Post[];
   modalRef?: BsModalRef;
+  categories:Category[] = [] as Category[];
 
   constructor(
     private toast: ToastrService,
@@ -31,6 +33,28 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchAllPost();
+  }
+
+  public getCategory() {
+    this.commonService.getCategory().subscribe(
+      (result: GetCategoryResponse) => {
+        if (result.acknowledgement.status === 'SUCCESS') {
+          this.categories = result.category;
+        } else {
+          this.toast.error(
+            result.acknowledgement.message,
+            result.acknowledgement.status
+          );
+        }
+      },
+      (err: HttpErrorResponse) => {
+        console.warn(err);
+        this.toast.error(
+          err.error.acknowledgement.message,
+          err.error.acknowledgement.status
+        );
+      }
+    );
   }
 
   openModal() {
