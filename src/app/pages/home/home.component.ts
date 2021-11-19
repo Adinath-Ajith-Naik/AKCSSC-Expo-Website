@@ -1,12 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { GetPostResponse, Post } from 'src/app/shared/models/post.model';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { CreatePostComponent } from '../admin-panel/posts/create-post/create-post.component';
+import { ViewPostComponent } from '../admin-panel/posts/view-post/view-post.component';
 
 @Component({
   selector: 'app-home',
@@ -16,19 +17,28 @@ import { CreatePostComponent } from '../admin-panel/posts/create-post/create-pos
 export class HomeComponent implements OnInit {
   postsLoading: boolean = true;
   posts: Post[] = [] as Post[];
-  // modalRef?: BsModalRef
+  modalRef?: BsModalRef
 
   constructor(
     private toast: ToastrService,
     private commonService: CommonService,
     private router:Router,
-    private spinner: NgxSpinnerService
-    // private modalService:BsModalService
+    private spinner: NgxSpinnerService,
+    private modalService:BsModalService
   ) { }
 
   ngOnInit(): void {
     this.fetchAllPost();
 
+  }
+  openPostModal(post: Post){
+    let modalOptions: ModalOptions = {
+      initialState:{
+        post: post,
+      },
+      class:"modal-lg"
+    };
+    this.modalRef = this.modalService.show(ViewPostComponent,modalOptions);
   }
 
   // openModal() {

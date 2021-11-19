@@ -86,7 +86,6 @@ export class CategoryComponent implements OnInit {
 
   public fetchCategoryById() {
     //fetch by id
-
     this.commonService.getSinglePost().subscribe(
       (fetchCategoryById: any) => {
         if (fetchCategoryById.acknowledgement.status === 'SUCCESS') {
@@ -94,51 +93,6 @@ export class CategoryComponent implements OnInit {
           this.toast.error(
             fetchCategoryById.acknowledgement.message,
             fetchCategoryById.acknowledgement.status
-          );
-        }
-      },
-      (err: HttpErrorResponse) => {
-        this.toast.error(
-          err.error.acknowledgement.message,
-          err.error.acknowledgement.status
-        );
-      }
-    );
-  }
-
-  public createCategory(values: any) {
-    //create api
-    this.commonService.createCategory(values).subscribe(
-      (createCategory: GetCategoryResponse) => {
-        if (createCategory.acknowledgement.status === 'SUCCESS') {
-          //Category added
-        } else {
-          this.toast.error(
-            createCategory.acknowledgement.message,
-            createCategory.acknowledgement.status
-          );
-        }
-      },
-      (err: HttpErrorResponse) => {
-        this.toast.error(
-          err.error.acknowledgement.message,
-          err.error.acknowledgement.status
-        );
-      }
-    );
-  }
-
-  //update
-
-  public updateCategory(values: any) {
-    this.commonService.updateCategory(values).subscribe(
-      (updateCategory: CommonResponse) => {
-        if (updateCategory.acknowledgement.status === 'SUCCESS') {
-          //Updated Category
-        } else {
-          this.toast.error(
-            updateCategory.acknowledgement.message,
-            updateCategory.acknowledgement.status
           );
         }
       },

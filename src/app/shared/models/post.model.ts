@@ -5,6 +5,7 @@ export interface CreatePostRequest {
 }
 
 export interface Post {
+  _id : string;
   startup: string;
   startupImage: String;
   caption: string;

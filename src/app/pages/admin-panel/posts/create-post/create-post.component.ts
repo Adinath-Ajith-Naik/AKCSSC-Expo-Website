@@ -7,6 +7,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { CommonResponse } from 'src/app/shared/models/acknowledgement.model';
 import {
   Category,
   GetCategoryResponse,
@@ -37,6 +38,8 @@ export class CreatePostComponent implements OnInit {
   firebaseImageUrl: string = '';
   firebaseLogoUrl: string = '';
   task?: AngularFireUploadTask;
+  updatePost: Post = {} as Post;
+  lengthVariable: string = '';
 
   get caption() {
     return this.postForm.get('caption');
@@ -62,13 +65,27 @@ export class CreatePostComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.updatePost);
+    console.log(this.updatePost.caption);
+    this.lengthVariable = this.updatePost?.caption
+      ? this.updatePost?.caption
+      : '';
     this.getCategory();
     this.postForm = new FormGroup({
-      startupname: new FormControl('', [Validators.required]),
-      caption: new FormControl('', [Validators.required]),
+      startupname: new FormControl(
+        this.updatePost.startup ? this.updatePost.startup : '',
+        [Validators.required]
+      ),
+      caption: new FormControl(
+        this.updatePost.caption ? this.updatePost.caption : 'dlshfhfsdl',
+        [Validators.required]
+      ),
       image: new FormControl('', [Validators.required]),
       logo: new FormControl(''),
-      category: new FormControl('', [Validators.required]),
+      category: new FormControl(
+        this.updatePost.category ? this.updatePost.category : '',
+        [Validators.required]
+      ),
     });
   }
 
@@ -106,7 +123,6 @@ export class CreatePostComponent implements OnInit {
       this.imageUrl,
       `posts/${startupname}`
     ).then((imageUrl) => {
-      console.log(imageUrl);
       this.firebaseImageUrl = imageUrl;
     });
     await this.uploadImageToFirebase(
@@ -122,7 +138,7 @@ export class CreatePostComponent implements OnInit {
     let post: Post = {} as Post;
     post.startup = values.startupname;
     post.category = values.category;
-    post.caption = values.caption;
+    post.caption = this.lengthVariable;
     post.likes = 0;
     this.uploadtoFB(values.startupname).then(() => {
       post.media = this.firebaseImageUrl;
@@ -167,5 +183,41 @@ export class CreatePostComponent implements OnInit {
       );
       return null;
     }
+  }
+
+  public updatePostFucntion(values: any) {
+    let updatePostRequest: CreatePostRequest = {} as CreatePostRequest;
+    let post: Post = {} as Post;
+    post.startup = values.startupname;
+    post.category = values.category;
+    post.caption = this.lengthVariable;
+    post.likes = 0;
+    this.uploadtoFB(values.startupname).then(() => {
+      post.media = this.firebaseImageUrl;
+      post.startupImage = this.firebaseLogoUrl;
+      updatePostRequest.post = post;
+      this.commonService.updatePostFunction(updatePostRequest,this.updatePost._id).subscribe(
+        (createPost: CommonResponse) => {
+          if (createPost.acknowledgement.status === 'SUCCESS') {
+            this.toast.success(
+              createPost.acknowledgement.message,
+              createPost.acknowledgement.status
+            );
+            this.modalRef.hide();
+          } else {
+            this.toast.error(
+              createPost.acknowledgement.message,
+              createPost.acknowledgement.status
+            );
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this.toast.error(
+            err.error.acknowledgement.message,
+            err.error.acknowledgement.status
+          );
+        }
+      );
+    });
   }
 }

@@ -66,7 +66,6 @@ export class CreateCategoryComponent implements OnInit {
   }
 
   public updateCategoryFucntion(category : CreateCategoryRequest){
-    console.log(category);
     this.commonService.updateCategoryFunction(category,this.Updatecategory._id).subscribe(
       (updateCategoryResponse: CommonResponse) => {
         if (updateCategoryResponse.acknowledgement.status === 'SUCCESS') {

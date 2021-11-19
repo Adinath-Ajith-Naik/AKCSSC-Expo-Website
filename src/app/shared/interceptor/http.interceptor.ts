@@ -22,7 +22,6 @@ export class HttpAPIInterceptor implements HttpInterceptor {
     if (request.url.search(loginReq) == -1) {
       let Fetchtoken = this.authService.getToken();
       this.token = Fetchtoken ? Fetchtoken : '';
-      console.log(this.token);
       let httpReq = request.clone({
         headers: new HttpHeaders({
           'Content-Type': 'application/json',

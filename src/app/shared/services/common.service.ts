@@ -37,13 +37,6 @@ export class CommonService {
     return this.http.get<GetCategoryResponse>(`${this.baseUrl}/category`);
   }
 
-  public updateCategory(updateCategoryRequest: CreateCategoryRequest) {
-    return this.http.put<CommonResponse>(
-      `${this.baseUrl}/category/:id`,
-      updateCategoryRequest
-    );
-  }
-
   public updateCategoryFunction(updateCategoryRequest: CreateCategoryRequest,id:string) {
     return this.http.put<CommonResponse>(
       `${this.baseUrl}/category/${id}`,
@@ -72,9 +65,9 @@ export class CommonService {
     return this.http.get<GetSinglePostResponse>(`${this.baseUrl}/post`);
   }
 
-  public updatePost(updatePostRequest: CommonResponse) {
+  public updatePostFunction(updatePostRequest:CreatePostRequest,id:string){
     return this.http.put<CommonResponse>(
-      `${this.baseUrl}/post`,
+      `${this.baseUrl}/post/${id}`,
       updatePostRequest
     );
   }

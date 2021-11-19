@@ -24,4 +24,8 @@ export class AuthService {
   public getToken() {
     return localStorage.getItem('token') ? localStorage.getItem('token') : '';
   }
+
+  public logout(){
+    localStorage.clear();
+  }
 }

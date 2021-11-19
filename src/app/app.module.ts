@@ -10,6 +10,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
 
 
 
@@ -35,7 +37,7 @@ import { AngularFireModule } from '@angular/fire';
       appId: '1:894248687891:web:c045b4e6baefbffef562e6',
       measurementId: 'G-9PR5415370',
     }),
-
+    TabsModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpAPIInterceptor, multi: true }],

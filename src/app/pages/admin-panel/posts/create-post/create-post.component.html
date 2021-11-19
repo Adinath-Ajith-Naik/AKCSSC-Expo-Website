@@ -21,24 +21,30 @@
     </p>
 
     <label for="logo">Logo </label>
-    <input class="form-control" id="logo" type="file" formControlName="logo" (change)="uploadLogoImage($event)" accept="image/*" />
+    <input
+      class="form-control"
+      id="logo"
+      type="file"
+      formControlName="logo"
+      (change)="uploadLogoImage($event)"
+      accept="image/*"
+    />
 
-    <label
-      for="category"
-      
-      >Category
-    </label>
+    <label for="category">Category </label>
     <select
       class="form-control"
       name="category"
       id="category"
       formControlName="category"
       [ngClass]="{
-        'input-error': category?.invalid && (category?.dirty || category?.touched)
+        'input-error':
+          category?.invalid && (category?.dirty || category?.touched)
       }"
     >
-      <option value='' disabled selected>select Catgory</option>
-      <option value="{{cat.category}}" *ngFor="let cat of categories">{{cat.category}}</option>
+      <option value="" disabled selected>select Catgory</option>
+      <option value="{{ cat.category }}" *ngFor="let cat of categories">
+        {{ cat.category }}
+      </option>
     </select>
     <p
       *ngIf="category?.invalid && (category?.dirty || category?.touched)"
@@ -49,9 +55,20 @@
         </p>
 
         <label for="content">Caption </label>
-        <input class="form-control" id="content" type="text" formControlName="caption" [ngClass]="{
+        <textarea rows="5" class="form-control" id="content" type="text" formControlName="caption" [(ngModel)]="lengthVariable" [ngClass]="{
         'input-error': caption?.invalid && (caption?.dirty || caption?.touched)
-      }" placeholder="Caption" />
+      }" placeholder="Caption">
+    {{ lengthVariable }}
+    </textarea>
+        <p [ngClass]="{
+        'text-danger': lengthVariable.length > 250,
+        'text-warning': lengthVariable.length == 250,
+        'text-success':
+          lengthVariable.length < 250 && lengthVariable.length > 0,
+        'text-secondary': lengthVariable.length == 0
+      }">
+            {{ lengthVariable.length }}/250
+        </p>
         <p *ngIf="caption?.invalid && (caption?.dirty || caption?.touched)" class="text-danger">
             <i class="uil uil-exclamation-circle"></i>
             <span *ngIf="caption?.errors?.required"> Caption is Required</span>

@@ -34,7 +34,7 @@ export class SigninComponent implements OnInit {
           this.user = login.user;
           this.service.saveToken(this.user._id);
           this.commonService.saveUsername(this.user.username);
-          this.router.navigate(['/vote']);
+          this.user.role == 'admin' ? this.router.navigate(['/admin-panel']) :this.router.navigate(['/vote'])
         } else {
           this.toast.error(
             login.acknowledgement.message,

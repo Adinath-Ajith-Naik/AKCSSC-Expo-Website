@@ -13,7 +13,7 @@
         <div class="col-12 col-lg-4" *ngFor="let post of posts; let i = index">
             <div class="row col-12 p-4 justify-content-center">
                 <div class="card shadow p-2">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center" (click)="openPostModal(post)">
                         <div class="col-12 text-center">
                             <img src="{{post.media}}" class="border border-secondary" alt="{{post.startup}}" style="height: 100%;width: 100%" />
                         </div>
@@ -23,16 +23,32 @@
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5>{{ post.startup }}</h5>
-                                        <p>{{post.category}}</p>
+                                        <div class="row mt-1">
+                                            <div class="col-2">
+                                                <img src="{{post.startupImage}}" alt="logo" style="height: 50px;width: 50px;" class="rounded-circle">
+                                            </div>
+                                            <div class="col-10">
+                                                <h5 (click)="openPostModal(post)">{{ post.startup }}</h5>
+                                                <p (click)="openPostModal(post)">{{post.category}}</p>
+                                            </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="row justify-content-between align-items-center">
-                                                <div>
+                                                <div (click)="openPostModal(post)">
                                                     {{ post.likes }} likes.
                                                 </div>
-                                                <div style="font-size: 42px;">
-                                                    <span class="uil uil-thumbs-up"></span>
+                                                <div class="row align-items-center">
+                                                    <div class="col-1 offset-1" style="font-size: 30px;">
+                                                        <span class="uil uil-eye text-warning" (click)="openPostModal(post)" tooltip="view post"></span>
+                                                    </div>
+                                                    <div class="col-1 offset-1" style="font-size: 25px;">
+                                                        <span class="uil uil-edit text-info" (click)="openUpdatePostModal(post)" tooltip="edit"></span>
+                                                    </div>
                                                 </div>
+
+                                                <!-- <div style="font-size: 30px;">
+                                                    <span class="uil uil-thumbs-up" tooltip="like"></span>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>

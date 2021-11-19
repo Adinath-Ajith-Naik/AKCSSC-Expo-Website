@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CommonResponse } from 'src/app/shared/models/acknowledgement.model';
@@ -12,6 +12,7 @@ import {
 } from 'src/app/shared/models/post.model';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { CreatePostComponent } from './create-post/create-post.component';
+import { ViewPostComponent } from './view-post/view-post.component';
 
 @Component({
   selector: 'app-posts',
@@ -65,6 +66,29 @@ export class PostsComponent implements OnInit {
     })
   }
 
+  openUpdatePostModal(post:Post) {
+    let modalOptions: ModalOptions = {
+      initialState:{
+        updatePost: post,
+      }
+    };
+    this.modalRef = this.modalService.show(CreatePostComponent,modalOptions);
+    this.modalRef.onHide?.subscribe((event)=>{
+      this.fetchAllPost();
+      
+    })
+  }
+
+  openPostModal(post: Post){
+    let modalOptions: ModalOptions = {
+      initialState:{
+        post: post,
+      },
+      class:"modal-lg"
+    };
+    this.modalRef = this.modalService.show(ViewPostComponent,modalOptions);
+  }
+
   public fetchAllPost() {
     //Fetch All Post
     this.spinner.show();
@@ -114,51 +138,6 @@ export class PostsComponent implements OnInit {
     );
   }
 
-  // Create Post
-
-  public createPost(values: any) {
-    //Fetch All Post
-    this.commonService.createPost(values).subscribe(
-      (createPost: CreatePostResponse) => {
-        if (createPost.acknowledgement.status === 'SUCCESS') {
-        } else {
-          this.toast.error(
-            createPost.acknowledgement.message,
-            createPost.acknowledgement.status
-          );
-        }
-      },
-      (err: HttpErrorResponse) => {
-        this.toast.error(
-          err.error.acknowledgement.message,
-          err.error.acknowledgement.status
-        );
-      }
-    );
-  }
-
-  // Update Post
-
-  public updatePost(values: any) {
-    this.commonService.updateCategory(values).subscribe(
-      (updatePost: CommonResponse) => {
-        if (updatePost.acknowledgement.status === 'SUCCESS') {
-          //Updated Category
-        } else {
-          this.toast.error(
-            updatePost.acknowledgement.message,
-            updatePost.acknowledgement.status
-          );
-        }
-      },
-      (err: HttpErrorResponse) => {
-        this.toast.error(
-          err.error.acknowledgement.message,
-          err.error.acknowledgement.status
-        );
-      }
-    );
-  }
 
   // Delete Post
 
