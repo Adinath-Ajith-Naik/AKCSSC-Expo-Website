@@ -72,7 +72,7 @@ export class CommonService {
     );
   }
 
-  public deletePost() {
-    return this.http.delete<CommonResponse>(`${this.baseUrl}/post`);
+  public deletePost(id:string) {
+    return this.http.delete<CommonResponse>(`${this.baseUrl}/post/${id}`);
   }
 }

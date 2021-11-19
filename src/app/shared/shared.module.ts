@@ -4,9 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NavbarComponent } from './layouts/navbar/navbar.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [CommonModule],
   exports: [
     CommonModule,
@@ -14,7 +16,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     ReactiveFormsModule,
     NgxSpinnerModule,
     TooltipModule,
-    TabsModule
+    TabsModule,
   ],
 })
 export class SharedModule {}

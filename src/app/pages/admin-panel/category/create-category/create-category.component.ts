@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CommonResponse } from 'src/app/shared/models/acknowledgement.model';
 import {
@@ -26,7 +27,8 @@ export class CreateCategoryComponent implements OnInit {
   constructor(
     private toast: ToastrService,
     private commonService: CommonService,
-    public modalRef: BsModalRef
+    public modalRef: BsModalRef,
+    private spinner:NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +42,7 @@ export class CreateCategoryComponent implements OnInit {
 
   public createCategory(values: any) {
     //create api
+    this.spinner.show();
     this.commonService.createCategory(values).subscribe(
       (createCategory: GetCategoryResponse) => {
         if (createCategory.acknowledgement.status === 'SUCCESS') {
@@ -49,11 +52,14 @@ export class CreateCategoryComponent implements OnInit {
             createCategory.acknowledgement.status
           );
           this.modalRef.hide();
+          this.spinner.hide();
         } else {
+          this.spinner.show();
           this.toast.error(
             createCategory.acknowledgement.message,
             createCategory.acknowledgement.status
           );
+          this.spinner.hide();
         }
       },
       (err: HttpErrorResponse) => {
@@ -66,6 +72,7 @@ export class CreateCategoryComponent implements OnInit {
   }
 
   public updateCategoryFucntion(category : CreateCategoryRequest){
+    this.spinner.show();
     this.commonService.updateCategoryFunction(category,this.Updatecategory._id).subscribe(
       (updateCategoryResponse: CommonResponse) => {
         if (updateCategoryResponse.acknowledgement.status === 'SUCCESS') {
@@ -74,11 +81,14 @@ export class CreateCategoryComponent implements OnInit {
             updateCategoryResponse.acknowledgement.status
           );
           this.modalRef.hide();
+          this.spinner.hide();
         } else {
+          this.spinner.show();
           this.toast.error(
             updateCategoryResponse.acknowledgement.message,
             updateCategoryResponse.acknowledgement.status
           );
+          this.spinner.hide();
         }
       },
       (err: HttpErrorResponse) => {

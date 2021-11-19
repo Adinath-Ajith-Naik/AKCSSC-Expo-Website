@@ -25,7 +25,12 @@ export class AuthService {
     return localStorage.getItem('token') ? localStorage.getItem('token') : '';
   }
 
-  public logout(){
+  public logout() {
     localStorage.clear();
+  }
+
+  public validUser(): boolean {
+    let result: boolean = localStorage.getItem('token') && localStorage.getItem('name') ? true : false;
+    return result;
   }
 }

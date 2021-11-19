@@ -11,13 +11,15 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NavbarComponent } from './shared/layouts/navbar/navbar.component';
 
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

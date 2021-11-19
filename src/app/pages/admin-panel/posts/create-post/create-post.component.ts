@@ -6,6 +6,7 @@ import {
 } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CommonResponse } from 'src/app/shared/models/acknowledgement.model';
 import {
@@ -61,12 +62,11 @@ export class CreatePostComponent implements OnInit {
     private toast: ToastrService,
     private commonService: CommonService,
     public modalRef: BsModalRef,
+    private spinner: NgxSpinnerService,
     private fireStorage: AngularFireStorage
   ) {}
 
   ngOnInit(): void {
-    console.log(this.updatePost);
-    console.log(this.updatePost.caption);
     this.lengthVariable = this.updatePost?.caption
       ? this.updatePost?.caption
       : '';
@@ -134,6 +134,7 @@ export class CreatePostComponent implements OnInit {
   }
 
   public createPost(values: any) {
+    this.spinner.show();
     let createPostRequest: CreatePostRequest = {} as CreatePostRequest;
     let post: Post = {} as Post;
     post.startup = values.startupname;
@@ -152,11 +153,14 @@ export class CreatePostComponent implements OnInit {
               createPost.acknowledgement.status
             );
             this.modalRef.hide();
+            this.spinner.hide();
           } else {
+            this.spinner.show();
             this.toast.error(
               createPost.acknowledgement.message,
               createPost.acknowledgement.status
             );
+            this.spinner.hide();
           }
         },
         (err: HttpErrorResponse) => {
@@ -186,6 +190,7 @@ export class CreatePostComponent implements OnInit {
   }
 
   public updatePostFucntion(values: any) {
+    this.spinner.show();
     let updatePostRequest: CreatePostRequest = {} as CreatePostRequest;
     let post: Post = {} as Post;
     post.startup = values.startupname;
@@ -204,6 +209,7 @@ export class CreatePostComponent implements OnInit {
               createPost.acknowledgement.status
             );
             this.modalRef.hide();
+            this.spinner.hide();
           } else {
             this.toast.error(
               createPost.acknowledgement.message,

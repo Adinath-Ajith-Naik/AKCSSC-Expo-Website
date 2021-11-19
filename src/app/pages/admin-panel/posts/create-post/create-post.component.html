@@ -83,8 +83,8 @@
             <span *ngIf="image?.errors?.required"> Please Upload the Image</span>
         </p>
 
-        <button type="button" class="btn btn-md btn-success mt-2" (click)="createPost(postForm.value)" [disabled]="postForm.invalid">
-      Add Post
+        <button type="button" class="btn btn-md btn-success mt-2" (click)="updatePost.media ? updatePostFucntion(postForm.value):createPost(postForm.value)" [disabled]="postForm.invalid">
+      {{updatePost.media? "EDIT" : "Add Post"}}
     </button>
     </form>
 </div>

@@ -141,11 +141,16 @@ export class PostsComponent implements OnInit {
 
   // Delete Post
 
-  public deletePost() {
+  public deletePost(_id:string) {
     //delete catergery
-    this.commonService.deletePost().subscribe(
+    this.commonService.deletePost(_id).subscribe(
       (deletePost: CommonResponse) => {
         if (deletePost.acknowledgement.status === 'SUCCESS') {
+          this.toast.success(
+            deletePost.acknowledgement.message,
+            deletePost.acknowledgement.status
+          );
+          this.fetchAllPost();
         } else {
           this.toast.error(
             deletePost.acknowledgement.message,

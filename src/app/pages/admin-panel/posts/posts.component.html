@@ -1,6 +1,9 @@
 <div class="container-fluid">
     <!-- modal open for create post -->
-    <div class="row justify-content-center justify-content-lg-end mt-5">
+    <div class="row justify-content-between mt-5">
+        <div class="col-12 col-md-8">
+            filter
+        </div>
         <div class="col-12 col-md-4 text-center">
             <button class="btn btn-lg btn-success" (click)="openModal()">
         ADD NEW POST
@@ -43,6 +46,9 @@
                                                     </div>
                                                     <div class="col-1 offset-1" style="font-size: 25px;">
                                                         <span class="uil uil-edit text-info" (click)="openUpdatePostModal(post)" tooltip="edit"></span>
+                                                    </div>
+                                                    <div class="col-1 offset-1" style="font-size: 25px;">
+                                                        <span class="uil uil-trash text-danger" (click)="deletePost(post._id)" tooltip="delete"></span>
                                                     </div>
                                                 </div>
 
