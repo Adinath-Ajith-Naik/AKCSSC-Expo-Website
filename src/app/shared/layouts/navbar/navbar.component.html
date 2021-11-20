@@ -1,1 +1,22 @@
-<p>navbar works!</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow shadow-sm p-2 pl-2">
+    <a class="navbar-brand icon-font ml-4" routerLink="/info"><strong>SOT: Startups Of Tomorrow</strong> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-item nav-link active" routerLink="/home"><i class="uil uil-estate"></i> Home</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-item nav-link active" routerLink="/info"><i class="uil uil-info-circle"></i> Info</a>
+            </li>
+        </ul>
+        <!-- <a class="nav-item nav-link mr-0">LogIn/SignUp</a> -->
+        <button class="btn btn-round btn-warning mx-2" style="border-radius: 30px;" routerLink="/sign-in" *ngIf="!signIn">LogIn</button>
+        <button class="btn btn-round btn-warning mx-2" style="border-radius: 30px;" routerLink="/sign-in" (click)="logOut()" *ngIf="signIn">Log Out</button>
+        <!-- <a class="btn btn-round btn-warning mx-2" style="border-radius: 30px;" (click)="logOut()" *ngIf="login==='true'">Sign Out</a> -->
+        <!-- <a class="btn btn-round btn-warning mx-2" style="border-radius: 30px;" routerLink="/my-account" *ngIf="userName==='mbcet'&& login==='true'">Profile</a> -->
+
+    </div>
+</nav>

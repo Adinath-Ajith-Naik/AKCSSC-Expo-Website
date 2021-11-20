@@ -4,7 +4,10 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CommonResponse } from 'src/app/shared/models/acknowledgement.model';
-import { Category, GetCategoryResponse } from 'src/app/shared/models/category.model';
+import {
+  Category,
+  GetCategoryResponse,
+} from 'src/app/shared/models/category.model';
 import {
   CreatePostResponse,
   GetPostResponse,
@@ -22,9 +25,11 @@ import { ViewPostComponent } from './view-post/view-post.component';
 export class PostsComponent implements OnInit {
   postsLoading: boolean = true;
   posts: Post[] = [] as Post[];
+  fetchPost: Post[] = [] as Post[];
   modalRef?: BsModalRef;
-  categories:Category[] = [] as Category[];
-
+  categories: Category[] = [] as Category[];
+  toggler: boolean = false;
+  selectedFilter: string[] = [] as string[];
   constructor(
     private toast: ToastrService,
     private commonService: CommonService,
@@ -33,6 +38,7 @@ export class PostsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getCategory();
     this.fetchAllPost();
   }
 
@@ -41,6 +47,9 @@ export class PostsComponent implements OnInit {
       (result: GetCategoryResponse) => {
         if (result.acknowledgement.status === 'SUCCESS') {
           this.categories = result.category;
+          this.categories.forEach((category) => {
+            category.selected = false;
+          });
         } else {
           this.toast.error(
             result.acknowledgement.message,
@@ -60,51 +69,51 @@ export class PostsComponent implements OnInit {
 
   openModal() {
     this.modalRef = this.modalService.show(CreatePostComponent);
-    this.modalRef.onHide?.subscribe((event)=>{
+    this.modalRef.onHide?.subscribe((event) => {
       this.fetchAllPost();
-      
-    })
+    });
   }
 
-  openUpdatePostModal(post:Post) {
+  openUpdatePostModal(post: Post) {
     let modalOptions: ModalOptions = {
-      initialState:{
+      initialState: {
         updatePost: post,
-      }
+      },
     };
-    this.modalRef = this.modalService.show(CreatePostComponent,modalOptions);
-    this.modalRef.onHide?.subscribe((event)=>{
+    this.modalRef = this.modalService.show(CreatePostComponent, modalOptions);
+    this.modalRef.onHide?.subscribe((event) => {
       this.fetchAllPost();
-      
-    })
+    });
   }
 
-  openPostModal(post: Post){
+  openPostModal(post: Post) {
     let modalOptions: ModalOptions = {
-      initialState:{
+      initialState: {
         post: post,
       },
-      class:"modal-lg"
+      class: 'modal-lg',
     };
-    this.modalRef = this.modalService.show(ViewPostComponent,modalOptions);
+    this.modalRef = this.modalService.show(ViewPostComponent, modalOptions);
   }
 
   public fetchAllPost() {
     //Fetch All Post
     this.spinner.show();
+    this.selectedFilter = [];
     this.commonService.getPost().subscribe(
       (fetchAllPost: GetPostResponse) => {
         if (fetchAllPost.acknowledgement.status === 'SUCCESS') {
+          this.fetchPost = fetchAllPost.posts;
           this.posts = fetchAllPost.posts;
           this.postsLoading = false;
-          this.spinner.hide();          
+          this.spinner.hide();
         } else {
           this.toast.error(
             fetchAllPost.acknowledgement.message,
             fetchAllPost.acknowledgement.status
           );
           this.postsLoading = false;
-          this.spinner.hide();          
+          this.spinner.hide();
         }
       },
       (err: HttpErrorResponse) => {
@@ -138,10 +147,9 @@ export class PostsComponent implements OnInit {
     );
   }
 
-
   // Delete Post
 
-  public deletePost(_id:string) {
+  public deletePost(_id: string) {
     //delete catergery
     this.commonService.deletePost(_id).subscribe(
       (deletePost: CommonResponse) => {
@@ -165,5 +173,49 @@ export class PostsComponent implements OnInit {
         );
       }
     );
+  }
+
+  toggleFilters() {
+    this.toggler = !this.toggler;
+  }
+
+  selectFilter(value: string) {
+    this.spinner.show();  
+    this.posts = [];
+    this.selectedFilter.includes(value)?this.selectedFilter.splice(this.selectedFilter.indexOf(value), 1) : this.selectedFilter.push(value)
+    console.log(this.selectedFilter);
+    if(this.selectedFilter.length){
+      this.posts = this.fetchPost.filter(post=>this.selectedFilter.includes(post.category))
+      console.log(this.posts);
+      
+    }else{
+      this.posts = this.fetchPost;
+    }
+    this.spinner.hide();
+
+
+    
+    // value.selected = !value.selected;
+    // if(!value.selected){
+    //   this.selectedFilter.splice(this.selectedFilter.indexOf(value.category), 1);
+    // } else {
+    //   this.selectedFilter.push(value.category);
+    // }
+    // if (
+    //   this.selectedFilter.length < 1 ||
+    //   !this.selectedFilter.length ||
+    //   !this.selectedFilter
+    // ) {
+    //   this.filteredPosts = this.posts;
+    // } else {
+    //   this.filteredPosts = [];
+    //   this.posts.map((post) => {
+    //     if (this.selectedFilter.includes(post._id[0])) {
+    //       var tempPost: Post = post;
+    //       this.filteredPosts.push(tempPost);
+    //       console.log();
+    //     }
+    //   });
+    // }
   }
 }

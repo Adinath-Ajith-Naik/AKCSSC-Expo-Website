@@ -6,6 +6,7 @@ export interface CreateCategoryRequest{
 export interface Category{
     _id:string;
     category:string;  
+    selected:boolean;
 }
 
 export interface GetCategoryResponse{

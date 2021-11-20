@@ -1,9 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Acknowledgement, CommonResponse } from '../models/acknowledgement.model';
 import {
-  CreateCategoryRequest, GetCategoryResponse,
+  Acknowledgement,
+  CommonResponse,
+} from '../models/acknowledgement.model';
+import {
+  CreateCategoryRequest,
+  GetCategoryResponse,
 } from '../models/category.model';
 import {
   CreatePostRequest,
@@ -37,14 +41,17 @@ export class CommonService {
     return this.http.get<GetCategoryResponse>(`${this.baseUrl}/category`);
   }
 
-  public updateCategoryFunction(updateCategoryRequest: CreateCategoryRequest,id:string) {
+  public updateCategoryFunction(
+    updateCategoryRequest: CreateCategoryRequest,
+    id: string
+  ) {
     return this.http.put<CommonResponse>(
       `${this.baseUrl}/category/${id}`,
       updateCategoryRequest
     );
   }
 
-  public deleteCategory(id:string) {
+  public deleteCategory(id: string) {
     return this.http.delete(`${this.baseUrl}/category/${id}`);
   }
 
@@ -65,14 +72,24 @@ export class CommonService {
     return this.http.get<GetSinglePostResponse>(`${this.baseUrl}/post`);
   }
 
-  public updatePostFunction(updatePostRequest:CreatePostRequest,id:string){
+  public updatePostFunction(updatePostRequest: CreatePostRequest, id: string) {
     return this.http.put<CommonResponse>(
       `${this.baseUrl}/post/${id}`,
       updatePostRequest
     );
   }
 
-  public deletePost(id:string) {
+  public deletePost(id: string) {
     return this.http.delete<CommonResponse>(`${this.baseUrl}/post/${id}`);
+  }
+
+  public likePost(id: string,like:number) {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.append('like',like);
+    return this.http.patch<CommonResponse>(`${this.baseUrl}/post/like/${id}`,{params:httpParams});
+  }
+
+  public leaderboard(){
+    return this.http.get<CommonResponse>(`${this.baseUrl}/leaderboard`);
   }
 }

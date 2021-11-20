@@ -1,0 +1,21 @@
+<table class="table table-stripped mt-3">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">Startup</th>
+            <th class="text-center">Likes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let entry of leaderboardEntry; let i = index;">
+            <td class="text-center">
+                {{i+1}}
+            </td>
+            <td class="text-center">{{entry.startup | uppercase}}</td>
+            <td class="text-center">
+                {{entry.likes}}
+            </td>
+        </tr>
+    </tbody>
+</table>
