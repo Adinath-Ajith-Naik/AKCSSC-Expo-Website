@@ -1,4 +1,10 @@
 <div class="container-fluid">
+
+    <div class="row justify-content-center mt-5" *ngIf="!signIn">
+      <div class="col-10 alert-warning alert-dismissible rounded p-2 text-center" style="border-radius: 25px;">
+        You're not signed in to SOT. Please login to the portal and vote for your favorite startup now. Please contact the Support team if you haven't received your credentials.
+      </div>
+    </div>
     <div class="row justify-content-start mt-5">
         <div class="col-12 col-md-8">
             <p (click)="toggleFilters()" class="d-flex align-items-center"><span class="h5">Filter&nbsp;</span><i style="font-size: 35px;" [ngClass]="{'uil':true, 'uil-angle-down':toggler==true?false:true, 'uil-angle-up':toggler==true?true:false}"></i></p>
