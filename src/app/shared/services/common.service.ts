@@ -90,11 +90,19 @@ export class CommonService {
     return this.http.get<LikeStatusResponse>(`${this.baseUrl}/likeStatus`);
   }
 
-  public likePost(id: string,like:number) {
-    let httpParams = new HttpParams();
-    httpParams = httpParams.append('like',like);
-    return this.http.patch<CommonResponse>(`${this.baseUrl}/post/like/${id}`,{params:httpParams});
+  public likePost(id:string){
+    return this.http.patch<CommonResponse>(`${this.baseUrl}/post/like/${id}`,{});
   }
+
+  public dislikePost(id:string){
+    return this.http.patch<CommonResponse>(`${this.baseUrl}/post/dislike/${id}`,{});
+  }
+
+  // public likePost(id: string,like:number) {
+  //   let httpParams = new HttpParams();
+  //   httpParams = httpParams.append('like',like);
+  //   return this.http.patch<CommonResponse>(`${this.baseUrl}/post/like/${id}`,{params:httpParams});
+  // }
 
   //leaderboard
 

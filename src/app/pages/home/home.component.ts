@@ -13,7 +13,6 @@ import { User } from 'src/app/shared/models/login.model';
 import { GetPostResponse, LikeStatus, LikeStatusResponse, Post } from 'src/app/shared/models/post.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
-import { CreatePostComponent } from '../admin-panel/posts/create-post/create-post.component';
 import { ViewPostComponent } from '../admin-panel/posts/view-post/view-post.component';
 
 @Component({
@@ -32,7 +31,7 @@ export class HomeComponent implements OnInit {
   categories: Category[] = [] as Category[];
   user: User = {} as User;
   LikePrivilege: LikeStatus = {} as LikeStatus;
-
+  liking: boolean = false;
   constructor(
     private toast: ToastrService,
     private commonService: CommonService,
@@ -40,24 +39,51 @@ export class HomeComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private modalService: BsModalService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCategory();
     this.fetchAllPost();
     this.signIn = this.authService.validUser();
-    if(this.signIn){
+    if (this.signIn) {
       this.fetchUserLikes();
     }
   }
 
-  fetchUserLikes(){
-    this.commonService.likeStatus().subscribe((res:LikeStatusResponse)=>{
-      if(res.acknowledgement.status === "SUCCESS"){
-        this.LikePrivilege = res.data;
-      }
-    },(err:HttpErrorResponse)=>{
+  fetchUserLikes() {
+    this.commonService.likeStatus().subscribe((res: LikeStatusResponse) => {
+      this.LikePrivilege = res.data;
+      console.log(this.LikePrivilege);
+    }, (err: HttpErrorResponse) => {
       console.warn(err);
+    })
+  }
+
+  likePost(id: string) {
+    this.liking = true;
+    this.commonService.likePost(id).subscribe((res: CommonResponse) => {
+      this.fetchUserLikes();
+      this.fetchAllPost();
+      this.liking = false;
+    }, (err: HttpErrorResponse) => {
+      console.warn(err);
+      this.liking = false;
+    })
+  }
+
+  doubleClick() {
+    this.toast.warning("Double click is not allowed!", "Sorry!")
+  }
+
+  dislikePost(id: string) {
+    this.liking = true;
+    this.commonService.dislikePost(id).subscribe((res: CommonResponse) => {
+      this.fetchUserLikes();
+      this.fetchAllPost();
+      this.liking = false;
+    }, (err: HttpErrorResponse) => {
+      console.warn(err);
+      this.liking = false;
     })
   }
 
@@ -143,48 +169,48 @@ export class HomeComponent implements OnInit {
     );
   }
 
-//   public async likePost(postId: string) {
-//     this.user = JSON.parse(this.fetchUser());
-//     let like:number = 0;
-//     if( this.user.quota == 1){
-//       like = 1;
-//       this.user.quota = -1;
-//       await this.liker(postId,like)
-//     }
-//     else if(this.user.post === postId){
-//       like = -1;
-//       this.user.quota = 1;
-//       await this.liker(postId,like)
-//     }
-//     else{
-//       this.toast.error("You can only like one Post.Please unlike liked post to continue","Cannot LIke");
-//     }
-//   }
+  //   public async likePost(postId: string) {
+  //     this.user = JSON.parse(this.fetchUser());
+  //     let like:number = 0;
+  //     if( this.user.quota == 1){
+  //       like = 1;
+  //       this.user.quota = -1;
+  //       await this.liker(postId,like)
+  //     }
+  //     else if(this.user.post === postId){
+  //       like = -1;
+  //       this.user.quota = 1;
+  //       await this.liker(postId,like)
+  //     }
+  //     else{
+  //       this.toast.error("You can only like one Post.Please unlike liked post to continue","Cannot LIke");
+  //     }
+  //   }
 
-//   liker(postId:string, like:number){
-//     this.commonService.likePost(postId, like).subscribe(
-//       (res: CommonResponse) => {
-//         if(res.acknowledgement.status === 'SUCCESS'){
-//           this.toast.success(
-//             res.acknowledgement.message,
-//             res.acknowledgement.status
-//           )
-//           localStorage.setItem('data',JSON.stringify(this.user));
-//         }
-//         else{
-//           this.toast.error(
-//             res.acknowledgement.message,
-//             res.acknowledgement.status
-//           );
-//         }
-//       },
-//       (err: HttpErrorResponse) => {
-//         console.warn(err);
-//         this.toast.error(
-//           err.error.acknowledgement.message,
-//           err.error.acknowledgement.status
-//         );
-//       }
-//     );
-//   }
+  //   liker(postId:string, like:number){
+  //     this.commonService.likePost(postId, like).subscribe(
+  //       (res: CommonResponse) => {
+  //         if(res.acknowledgement.status === 'SUCCESS'){
+  //           this.toast.success(
+  //             res.acknowledgement.message,
+  //             res.acknowledgement.status
+  //           )
+  //           localStorage.setItem('data',JSON.stringify(this.user));
+  //         }
+  //         else{
+  //           this.toast.error(
+  //             res.acknowledgement.message,
+  //             res.acknowledgement.status
+  //           );
+  //         }
+  //       },
+  //       (err: HttpErrorResponse) => {
+  //         console.warn(err);
+  //         this.toast.error(
+  //           err.error.acknowledgement.message,
+  //           err.error.acknowledgement.status
+  //         );
+  //       }
+  //     );
+  //   }
 }
