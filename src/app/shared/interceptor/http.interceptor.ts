@@ -21,9 +21,10 @@ export class HttpAPIInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     const loginReq = '/auth/login';
     const postReq ='/post'
-    const leaderboard ='/leaderboard';
+    const catReq ='/category'
+    const leaderboardReq ='/leaderboard';
 
-    if ((request.url.search(loginReq) == -1 && request.url.search(postReq) == -1 && request.url.search(leaderboard) == -1)) {
+    if ((request.url.search(loginReq) == -1 && request.url.search(postReq) == -1 && request.url.search(catReq) == -1 && request.url.search(leaderboardReq) == -1)) {
       console.log(this.authService.validUser());
       if(this.authService.validUser()){
         let Fetchtoken = this.authService.getToken();

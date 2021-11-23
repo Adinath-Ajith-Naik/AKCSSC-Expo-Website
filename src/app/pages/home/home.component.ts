@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getCategory();
     this.fetchAllPost();
     this.signIn = this.authService.validUser();
     if(this.signIn){
@@ -90,30 +91,30 @@ export class HomeComponent implements OnInit {
     this.spinner.hide();
   }
 
-  // public getCategory() {
-  //   this.commonService.getCategory().subscribe(
-  //     (result: GetCategoryResponse) => {
-  //       if (result.acknowledgement.status === 'SUCCESS') {
-  //         this.categories = result.category;
-  //         this.categories.forEach((category) => {
-  //           category.selected = false;
-  //         });
-  //       } else {
-  //         this.toast.error(
-  //           result.acknowledgement.message,
-  //           result.acknowledgement.status
-  //         );
-  //       }
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       console.warn(err);
-  //       this.toast.error(
-  //         err.error.acknowledgement.message,
-  //         err.error.acknowledgement.status
-  //       );
-  //     }
-  //   );
-  // }
+  public getCategory() {
+    this.commonService.getCategory().subscribe(
+      (result: GetCategoryResponse) => {
+        if (result.acknowledgement.status === 'SUCCESS') {
+          this.categories = result.category;
+          this.categories.forEach((category) => {
+            category.selected = false;
+          });
+        } else {
+          this.toast.error(
+            result.acknowledgement.message,
+            result.acknowledgement.status
+          );
+        }
+      },
+      (err: HttpErrorResponse) => {
+        console.warn(err);
+        this.toast.error(
+          err.error.acknowledgement.message,
+          err.error.acknowledgement.status
+        );
+      }
+    );
+  }
 
   public fetchAllPost() {
     //Fetch All Post
