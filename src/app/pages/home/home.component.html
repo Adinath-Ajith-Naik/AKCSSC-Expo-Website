@@ -47,8 +47,13 @@
                                                         <span class="uil uil-thumbs-up text-secondary" tooltip="like" ></span>
                                                     </div>
                                                     <div class="col-1 offset-1" style="font-size: 25px;" *ngIf="signIn && (LikePrivilege.quota == -1) && (LikePrivilege.post === post._id)">
-                                                      <span class="uil uil-thumbs-up text-secondary" tooltip="like" ></span>
+                                                      <span class="uil uil-thumbs-up text-primary" tooltip="liked" ></span>
                                                   </div>
+<!--
+                                                    //BUTTON WHEN LIKED
+                                                    <div class="col-1 offset-1" style="font-size: 25px;" *ngIf="signIn">
+                                                        <span class="uil uil-thumbs-up text-primary" tooltip="like"></span>
+                                                    </div> -->
                                                     <!-- <div class="col-1 offset-1" style="font-size: 25px;">
                                                         <span class="uil uil-trash text-danger" (click)="deletePost(post._id)" tooltip="delete"></span>
                                                     </div> -->
