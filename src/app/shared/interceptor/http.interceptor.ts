@@ -21,17 +21,13 @@ export class HttpAPIInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     const loginReq = '/auth/login';
     const postReq ='/post'
-    const postLike ='/post/like';
-    console.log(request.url);
-    
-    console.log(request.url.search(postLike));
-    if ((request.url.search(loginReq) == -1 && request.url.search(postReq) == -1 )|| request.url.search(postLike)>=0) {
+    const leaderboard ='/leaderboard';
+
+    if ((request.url.search(loginReq) == -1 && request.url.search(postReq) == -1 && request.url.search(leaderboard) == -1)) {
       console.log(this.authService.validUser());
       if(this.authService.validUser()){
         let Fetchtoken = this.authService.getToken();
         this.token = Fetchtoken ? Fetchtoken : '';
-        console.log(this.token);
-        
         let httpReq = request.clone({
           headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -45,7 +41,7 @@ export class HttpAPIInterceptor implements HttpInterceptor {
         this.router.navigate(['/sign-in']);
         this.spinner.hide();
       }
-      
+
     }
     return next.handle(request);
   }

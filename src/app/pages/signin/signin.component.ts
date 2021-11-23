@@ -34,7 +34,7 @@ export class SigninComponent implements OnInit {
       this.user.role == 'admin' ? this.router.navigate(['/admin-panel']) :this.router.navigate(['/home'])
       this.spinner.hide();
     }
-    this.spinner.hide();  
+    this.spinner.hide();
   }
 
   public login(formData: LoginRequest) {
@@ -61,6 +61,7 @@ export class SigninComponent implements OnInit {
           err.error.acknowledgement.message,
           err.error.acknowledgement.status
         );
+        this.spinner.hide();
       }
     );
   }

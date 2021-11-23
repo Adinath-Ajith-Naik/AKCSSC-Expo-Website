@@ -63,8 +63,6 @@ export class CategoryComponent implements OnInit {
       (fetchAllCategory: GetCategoryResponse) => {
         if (fetchAllCategory.acknowledgement.status === 'SUCCESS') {
           this.categories = fetchAllCategory.category;
-          console.log(this.categories);
-          console.log(fetchAllCategory);
 
           this.spinner.hide();
         } else {

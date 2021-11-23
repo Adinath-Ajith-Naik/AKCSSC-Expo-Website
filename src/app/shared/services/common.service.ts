@@ -14,6 +14,7 @@ import {
   CreatePostResponse,
   GetPostResponse,
   GetSinglePostResponse,
+  LikeStatusResponse,
 } from '../models/post.model';
 
 @Injectable({
@@ -83,11 +84,19 @@ export class CommonService {
     return this.http.delete<CommonResponse>(`${this.baseUrl}/post/${id}`);
   }
 
+  //likes
+
+  public likeStatus(){
+    return this.http.get<LikeStatusResponse>(`${this.baseUrl}/likeStatus`);
+  }
+
   public likePost(id: string,like:number) {
     let httpParams = new HttpParams();
     httpParams = httpParams.append('like',like);
     return this.http.patch<CommonResponse>(`${this.baseUrl}/post/like/${id}`,{params:httpParams});
   }
+
+  //leaderboard
 
   public leaderboard(){
     return this.http.get<CommonResponse>(`${this.baseUrl}/leaderboard`);

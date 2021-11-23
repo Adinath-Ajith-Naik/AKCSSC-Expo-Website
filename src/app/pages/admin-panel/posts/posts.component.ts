@@ -180,21 +180,19 @@ export class PostsComponent implements OnInit {
   }
 
   selectFilter(value: string) {
-    this.spinner.show();  
+    this.spinner.show();
     this.posts = [];
     this.selectedFilter.includes(value)?this.selectedFilter.splice(this.selectedFilter.indexOf(value), 1) : this.selectedFilter.push(value)
-    console.log(this.selectedFilter);
     if(this.selectedFilter.length){
       this.posts = this.fetchPost.filter(post=>this.selectedFilter.includes(post.category))
-      console.log(this.posts);
-      
+
     }else{
       this.posts = this.fetchPost;
     }
     this.spinner.hide();
 
 
-    
+
     // value.selected = !value.selected;
     // if(!value.selected){
     //   this.selectedFilter.splice(this.selectedFilter.indexOf(value.category), 1);
@@ -213,7 +211,6 @@ export class PostsComponent implements OnInit {
     //     if (this.selectedFilter.includes(post._id[0])) {
     //       var tempPost: Post = post;
     //       this.filteredPosts.push(tempPost);
-    //       console.log();
     //     }
     //   });
     // }

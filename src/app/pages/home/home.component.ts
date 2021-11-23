@@ -10,7 +10,7 @@ import {
   GetCategoryResponse,
 } from 'src/app/shared/models/category.model';
 import { User } from 'src/app/shared/models/login.model';
-import { GetPostResponse, Post } from 'src/app/shared/models/post.model';
+import { GetPostResponse, LikeStatus, LikeStatusResponse, Post } from 'src/app/shared/models/post.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { CreatePostComponent } from '../admin-panel/posts/create-post/create-post.component';
@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   fetchPost: Post[] = [] as Post[];
   categories: Category[] = [] as Category[];
   user: User = {} as User;
+  LikePrivilege: LikeStatus = {} as LikeStatus;
 
   constructor(
     private toast: ToastrService,
@@ -42,17 +43,23 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCategory();
     this.fetchAllPost();
     this.signIn = this.authService.validUser();
+    if(this.signIn){
+      this.fetchUserLikes();
+    }
   }
 
-  fetchUser():string{
-    let data: any = localStorage.getItem('data')
-    ? localStorage.getItem('data')
-    : '';
-    return data;
+  fetchUserLikes(){
+    this.commonService.likeStatus().subscribe((res:LikeStatusResponse)=>{
+      if(res.acknowledgement.status === "SUCCESS"){
+        this.LikePrivilege = res.data;
+      }
+    },(err:HttpErrorResponse)=>{
+      console.warn(err);
+    })
   }
+
   openPostModal(post: Post) {
     let modalOptions: ModalOptions = {
       initialState: {
@@ -73,42 +80,40 @@ export class HomeComponent implements OnInit {
     this.selectedFilter.includes(value)
       ? this.selectedFilter.splice(this.selectedFilter.indexOf(value), 1)
       : this.selectedFilter.push(value);
-    console.log(this.selectedFilter);
     if (this.selectedFilter.length) {
       this.posts = this.fetchPost.filter((post) =>
         this.selectedFilter.includes(post.category)
       );
-      console.log(this.posts);
     } else {
       this.posts = this.fetchPost;
     }
     this.spinner.hide();
   }
 
-  public getCategory() {
-    this.commonService.getCategory().subscribe(
-      (result: GetCategoryResponse) => {
-        if (result.acknowledgement.status === 'SUCCESS') {
-          this.categories = result.category;
-          this.categories.forEach((category) => {
-            category.selected = false;
-          });
-        } else {
-          this.toast.error(
-            result.acknowledgement.message,
-            result.acknowledgement.status
-          );
-        }
-      },
-      (err: HttpErrorResponse) => {
-        console.warn(err);
-        this.toast.error(
-          err.error.acknowledgement.message,
-          err.error.acknowledgement.status
-        );
-      }
-    );
-  }
+  // public getCategory() {
+  //   this.commonService.getCategory().subscribe(
+  //     (result: GetCategoryResponse) => {
+  //       if (result.acknowledgement.status === 'SUCCESS') {
+  //         this.categories = result.category;
+  //         this.categories.forEach((category) => {
+  //           category.selected = false;
+  //         });
+  //       } else {
+  //         this.toast.error(
+  //           result.acknowledgement.message,
+  //           result.acknowledgement.status
+  //         );
+  //       }
+  //     },
+  //     (err: HttpErrorResponse) => {
+  //       console.warn(err);
+  //       this.toast.error(
+  //         err.error.acknowledgement.message,
+  //         err.error.acknowledgement.status
+  //       );
+  //     }
+  //   );
+  // }
 
   public fetchAllPost() {
     //Fetch All Post
@@ -137,48 +142,48 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  public async likePost(postId: string) {
-    this.user = JSON.parse(this.fetchUser());
-    let like:number = 0;
-    if( this.user.quota == 1){
-      like = 1;
-      this.user.quota = -1;
-      await this.liker(postId,like)
-    }
-    else if(this.user.post === postId){
-      like = -1;
-      this.user.quota = 1;
-      await this.liker(postId,like)
-    }
-    else{
-      this.toast.error("You can only like one Post.Please unlike liked post to continue","Cannot LIke");
-    }
-  }
+//   public async likePost(postId: string) {
+//     this.user = JSON.parse(this.fetchUser());
+//     let like:number = 0;
+//     if( this.user.quota == 1){
+//       like = 1;
+//       this.user.quota = -1;
+//       await this.liker(postId,like)
+//     }
+//     else if(this.user.post === postId){
+//       like = -1;
+//       this.user.quota = 1;
+//       await this.liker(postId,like)
+//     }
+//     else{
+//       this.toast.error("You can only like one Post.Please unlike liked post to continue","Cannot LIke");
+//     }
+//   }
 
-  liker(postId:string, like:number){
-    this.commonService.likePost(postId, like).subscribe(
-      (res: CommonResponse) => {
-        if(res.acknowledgement.status === 'SUCCESS'){
-          this.toast.success(
-            res.acknowledgement.message,
-            res.acknowledgement.status
-          )
-          localStorage.setItem('data',JSON.stringify(this.user));
-        }
-        else{
-          this.toast.error(
-            res.acknowledgement.message,
-            res.acknowledgement.status
-          );
-        }
-      },
-      (err: HttpErrorResponse) => {
-        console.warn(err);
-        this.toast.error(
-          err.error.acknowledgement.message,
-          err.error.acknowledgement.status
-        );
-      }
-    );
-  }
+//   liker(postId:string, like:number){
+//     this.commonService.likePost(postId, like).subscribe(
+//       (res: CommonResponse) => {
+//         if(res.acknowledgement.status === 'SUCCESS'){
+//           this.toast.success(
+//             res.acknowledgement.message,
+//             res.acknowledgement.status
+//           )
+//           localStorage.setItem('data',JSON.stringify(this.user));
+//         }
+//         else{
+//           this.toast.error(
+//             res.acknowledgement.message,
+//             res.acknowledgement.status
+//           );
+//         }
+//       },
+//       (err: HttpErrorResponse) => {
+//         console.warn(err);
+//         this.toast.error(
+//           err.error.acknowledgement.message,
+//           err.error.acknowledgement.status
+//         );
+//       }
+//     );
+//   }
 }

@@ -5,7 +5,7 @@ export interface CreatePostRequest {
 }
 
 export interface Post {
-  _id : string;
+  _id: string;
   startup: string;
   startupImage: String;
   caption: string;
@@ -30,3 +30,14 @@ export interface GetSinglePostResponse {
 }
 
 
+export interface LikeStatusResponse {
+  acknowledgement: Acknowledgement;
+  data: LikeStatus;
+}
+
+
+export interface LikeStatus {
+  _id: string;
+  quota: number;
+  post: string;
+}
