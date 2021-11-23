@@ -49,13 +49,13 @@
                                                     <div class="col-1 offset-1" style="font-size: 30px;">
                                                         <span class="uil uil-eye text-warning" (click)="openPostModal(post)" tooltip="view post"></span>
                                                     </div>
-                                                    <div class="col-1 offset-1" style="font-size: 25px;" *ngIf="signIn && (LikePrivilege.quota == 1 && !LikePrivilege.post) && !liking && (role === 'user')" (click)="likePost(post._id)">
+                                                    <div class="col-1 offset-1" style="font-size: 25px;" *ngIf="signIn && (LikePrivilege.quota == 1 && !LikePrivilege.post) && !liking && (role === 'user')" (dblclick)="doubleClick()" (click)="likePost(post._id)">
                                                         <span class="uil uil-thumbs-up text-secondary" tooltip="like" ></span>
                                                     </div>
                                                   <div class="col-1 offset-1" *ngIf="signIn && liking && (role === 'user')">
                                                     <div class="spinner-border text-primary" style="font-size: xx-small;" role="status" ></div>
                                                   </div>
-                                                    <div class="col-1 offset-1" style="font-size: 25px;" *ngIf="signIn && (LikePrivilege.post === post._id) && !liking && (role === 'user')" (click)="dislikePost(post._id)">
+                                                    <div class="col-1 offset-1" style="font-size: 25px;" *ngIf="signIn && (LikePrivilege.post === post._id) && !liking && (role === 'user')" (dblclick)="doubleClick()" (click)="dislikePost(post._id)">
                                                       <span class="uil uil-thumbs-up text-spin text-primary" tooltip="liked" ></span>
                                                     </div>
                                                   </div>

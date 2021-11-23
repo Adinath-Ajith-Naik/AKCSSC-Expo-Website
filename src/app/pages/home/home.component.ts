@@ -61,32 +61,55 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  likePost(id: string) {
-    this.liking = true;
-    this.commonService.likePost(id).subscribe((res: CommonResponse) => {
-      this.fetchUserLikes();
-      this.fetchAllPost();
-      this.liking = false;
-    }, (err: HttpErrorResponse) => {
-      console.warn(err);
-      this.liking = false;
-    })
-  }
-
   doubleClick() {
     this.toast.warning("Double click is not allowed!", "Sorry!")
   }
 
-  dislikePost(id: string) {
+  likePost(id: string) {
     this.liking = true;
-    this.commonService.dislikePost(id).subscribe((res: CommonResponse) => {
-      this.fetchUserLikes();
-      this.fetchAllPost();
-      this.liking = false;
+    this.commonService.likeStatus().subscribe((res: LikeStatusResponse) => {
+      if (res.data.quota === 1) {
+        this.commonService.likePost(id).subscribe((res: CommonResponse) => {
+          this.fetchUserLikes();
+          this.fetchAllPost();
+          this.liking = false;
+        }, (err: HttpErrorResponse) => {
+          console.warn(err);
+          this.liking = false;
+        })
+      }
+      else{
+        this.toast.error("Cannot like this post! Please unlike all the post and try again.", "you're out of likes!")
+      }
     }, (err: HttpErrorResponse) => {
       console.warn(err);
       this.liking = false;
     })
+
+  }
+
+
+  dislikePost(id: string) {
+    this.liking = true;
+    this.commonService.likeStatus().subscribe((res: LikeStatusResponse) => {
+      if (res.data.quota === -1) {
+        this.commonService.dislikePost(id).subscribe((res: CommonResponse) => {
+          this.fetchUserLikes();
+          this.fetchAllPost();
+          this.liking = false;
+        }, (err: HttpErrorResponse) => {
+          console.warn(err);
+          this.liking = false;
+        })
+      }
+      else{
+        this.toast.error("Cannot unlike this post!", "Something went wrong!")
+      }
+    }, (err: HttpErrorResponse) => {
+      console.warn(err);
+      this.liking = false;
+    })
+
   }
 
   openPostModal(post: Post) {
