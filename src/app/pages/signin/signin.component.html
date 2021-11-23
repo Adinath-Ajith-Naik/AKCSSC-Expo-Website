@@ -1,12 +1,48 @@
-<p>signin works!</p>
+<div class="mr">
+    <div class="container-aks gradient">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-md-8 col-lg-5">
+                <div class="card shadow border-rounded p-5 m-5">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <!-- <img src="../../../assets/images/akcssc-dark.jpeg" alt="" style="height: 100px;width: 150px;"> -->
+                            <h1><strong>SOT</strong></h1>
 
-<form [formGroup]="loginForm">
-    <label for="username">UserName: </label>
-    <input id="username" type="text" formControlName="username">
-
-    <label for="password">Password </label>
-    <input id="password" type="password" formControlName="password">
-
-    <button type="button" (click)="login(loginForm.value)">Log In</button>
-
-</form>
+                            <h4>STARTUPS OF TOMORROW</h4>
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <form [formGroup]="loginForm">
+                            <div class="col-12 text-center">
+                                <p><strong>Sign in</strong></p>
+                            </div>
+                            <div class="col-12 my-2">
+                                <input id="username" type="text" class="form-control" formControlName="username" placeholder="username" />
+                            </div>
+                            <div class="col-12 my-2">
+                                <input id="password" type="password" class="form-control" formControlName="password" placeholder="password" />
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="button" class="mt-3 btn btn-success" (click)="login(loginForm.value)">
+                  sign In
+                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div>
+        <div class="row justify-content-center align-items-center mt-3">
+            <div class="mt-3 col-12 col-sm-12 col-md-4 col-lg-2 text-center"><img src="../../../assets/images/CSLogo.png" alt="CS Logo" style="height: 50px;width: 150px;"></div>
+            <div class="mt-3 col-12 col-sm-12 col-md-4 col-lg-2 text-center"><img src="../../../assets/images/PIE-logo (2).png" alt="PIE Logo" style="height: 50px;width: 150px;"></div>
+            <div class="mt-3 col-12 col-sm-12 col-md-4 col-lg-2 text-center"><img src="../../../assets/images/ADIF logo.png" alt="ADIF Logo" style="height: 50px;width: 100px;"></div>
+            <div class="mt-3 col-12 col-sm-12 col-md-4 col-lg-2 text-center"><img src="../../../assets/images/KSUM.png" alt="KSUM Logo" style="height: 50px;width: 125px;"></div>
+            <div class="mt-3 col-12 col-sm-12 col-md-4 col-lg-2 text-center"><img src="../../../assets/images/IEEE MBCET.png" alt="IEEE MBCET" style="height: 50px;width: 75px;"></div>
+            <div class="mt-3 col-12 col-sm-12 col-md-4 col-lg-2 text-center"><img src="../../../assets/images/IEEE.png" alt="IEEE" style="height: 50px;width: 125px;"></div>
+        </div>
+    </div>
+</div>

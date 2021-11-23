@@ -1,43 +1,43 @@
-import { Acknowledgement } from "./acknowledgement.model";
+import { Acknowledgement } from './acknowledgement.model';
 
-export interface createPostRequest{
-    post:post;
+export interface CreatePostRequest {
+  post: Post;
 }
 
-export interface post{
-    startup:string,
-    startupImage:String,
-    caption:string,
-    media:string,
-    likes:number,
-    Category:string
+export interface Post {
+  _id: string;
+  startup: string;
+  startupImage: String;
+  caption: string;
+  media: string;
+  likes: number;
+  category: string;
 }
 
-export interface createPostResponse{
-    acknowledgement:Acknowledgement,
-    post:post;
+export interface CreatePostResponse {
+  acknowledgement: Acknowledgement;
+  post: Post;
 }
 
-export interface getPostResponse{
-    acknowledgement:Acknowledgement;
-    post:post;
+export interface GetPostResponse {
+  acknowledgement: Acknowledgement;
+  posts: Post[];
 }
 
-export interface getSinglePostResponse{
-    acknowledgement:Acknowledgement;
-    post:post[];
+export interface GetSinglePostResponse {
+  acknowledgement: Acknowledgement;
+  post: Post[];
 }
 
-export interface updatePostRequest{
-    post:post;
+
+export interface LikeStatusResponse {
+  acknowledgement: Acknowledgement;
+  data: LikeStatus;
 }
 
-export interface updatePostResponse{
-    acknowledgement:Acknowledgement;
-}
 
-export interface deletePostResponse{
-    acknowledgement:Acknowledgement;
+export interface LikeStatus {
+  _id: string;
+  quota: number;
+  post: string;
 }
-
- 

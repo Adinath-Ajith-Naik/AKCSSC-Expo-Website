@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Create Category</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="categoryForm">
+        <input id="categoryname" type="text" class="form-control" formControlName="category" [ngClass]="{'input-error': category?.invalid && (category?.dirty || category?.touched) }" placeholder="Category Name" />
+        <p *ngIf=" category?.invalid && (category?.dirty || category?.touched)" class="text-danger">
+            <i class="uil uil-exclamation-circle "></i>
+            <span *ngIf="category?.errors?.required"> Cateogry is Required</span>
+        </p>
+        <button type="button" class="btn btn-md btn-success mt-2" (click)="Updatecategory.category ? updateCategoryFucntion(categoryForm.value) : createCategory(categoryForm.value) " [disabled]="categoryForm.invalid ">
+          {{Updatecategory.category ? "Update" : "Add"}}
+      </button>
+    </form>
+</div>

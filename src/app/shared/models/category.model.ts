@@ -1,33 +1,20 @@
 import { Acknowledgement } from "./acknowledgement.model";
 
-export interface createCategoryRequest{
+export interface CreateCategoryRequest{
     category:string;
 }
+export interface Category{
+    _id:string;
+    category:string;  
+    selected:boolean;
+}
 
-export interface createCategoryResponse{
+export interface GetCategoryResponse{
     acknowledgement:Acknowledgement;
     category:Category[];
 }
 
-export interface Category{
-    _id:string;
-    category:string;  
-}
 
-export interface getCategoryResponse{
-    acknowledgement:Acknowledgement;
-    categories:Category[];
-}
 
-export interface updateCategoryRequest{
-    category:string;
-}
 
-export interface updateCategoryResponse{
-    acknowledgement:Acknowledgement;
-}
-
-export interface deleteCategoryResponse{
-    acknowledgement:Acknowledgement;
-}
 

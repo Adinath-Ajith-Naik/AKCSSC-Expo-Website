@@ -1,1 +1,73 @@
-<p>home works!</p>
+<div class="container-fluid">
+
+    <div class="row justify-content-center mt-5" *ngIf="!signIn">
+      <div class="col-10 alert-warning alert-dismissible rounded p-2 text-center" style="border-radius: 25px;">
+        You're not signed in to SOT. Please login to the portal and vote for your favorite startup now. Please contact the Support team if you haven't received your credentials.
+      </div>
+    </div>
+    <div class="row justify-content-start mt-5">
+        <div class="col-12 col-md-8">
+            <p (click)="toggleFilters()" class="d-flex align-items-center"><span class="h5">Filter&nbsp;</span><i style="font-size: 35px;" [ngClass]="{'uil':true, 'uil-angle-down':toggler==true?false:true, 'uil-angle-up':toggler==true?true:false}"></i></p>
+            <div class="row" *ngIf="toggler==true">
+                <div class="col-12">
+                    <button type="button" class="btn btn-outline-secondary  mb-2 mx-1" [ngClass]="{'active':this.selectedFilter.includes(filter.category)}" *ngFor=" let filter of categories" (click)="selectFilter(filter.category)">{{filter.category}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- listing previous posts -->
+    <div class="row" *ngIf="!postsLoading">
+        <div class="col-12 col-lg-4" *ngFor="let post of posts; let i = index">
+            <div class="row col-12 p-4 justify-content-center">
+                <div class="card shadow p-2">
+                    <div class="row justify-content-center" (click)="openPostModal(post)">
+                        <div class="col-12 text-center ">
+                            <img src="{{post.media}} " class="border border-secondary " alt="{{post.startup}} " style="height:100%;width:100% " />
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <div class="row justify-content-start">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row mt-1">
+                                            <div class="col-2">
+                                                <img src="{{post.startupImage}}" alt="logo" style="height: 50px;width: 50px;" class="rounded-circle">
+                                            </div>
+                                            <div class="col-10">
+                                                <h5 (click)="openPostModal(post)">{{ post.startup }}</h5>
+                                                <p (click)="openPostModal(post)">{{post.category}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div (click)="openPostModal(post)">
+                                                    {{ post.likes }} likes.
+                                                </div>
+                                                <div class="row align-items-center">
+                                                    <div class="col-1 offset-1" style="font-size: 30px;">
+                                                        <span class="uil uil-eye text-warning" (click)="openPostModal(post)" tooltip="view post"></span>
+                                                    </div>
+                                                    <div class="col-1 offset-1" style="font-size: 25px;" *ngIf="signIn && (LikePrivilege.quota == 1 && !LikePrivilege.post) && !liking && (role === 'user')" (click)="likePost(post._id)">
+                                                        <span class="uil uil-thumbs-up text-secondary" tooltip="like" ></span>
+                                                    </div>
+                                                  <div class="col-1 offset-1" *ngIf="signIn && liking && (role === 'user')">
+                                                    <div class="spinner-border text-primary" style="font-size: xx-small;" role="status" ></div>
+                                                  </div>
+                                                    <div class="col-1 offset-1" style="font-size: 25px;" *ngIf="signIn && (LikePrivilege.post === post._id) && !liking && (role === 'user')" (click)="dislikePost(post._id)">
+                                                      <span class="uil uil-thumbs-up text-spin text-primary" tooltip="liked" ></span>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

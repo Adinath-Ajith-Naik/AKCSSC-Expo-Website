@@ -8,28 +8,41 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable()
 export class HttpAPIInterceptor implements HttpInterceptor {
   token: string = '';
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private router:Router, private spinner:NgxSpinnerService) {}
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const loginReq = '/auth/login';
+    const postReq ='/post';
+    const catReq ='/category';
+    const leaderboardReq ='/leaderboard';
+    const likeAPI ='/post/like';
+    const dislikeAPI ='/post/dislike';
+    if ((request.url.search(loginReq) == -1 && request.url.search(postReq) == -1 && request.url.search(catReq) == -1 && request.url.search(leaderboardReq) == -1) || (request.url.search(dislikeAPI) || request.url.search(likeAPI))) {
+      if(this.authService.validUser()){
+        let Fetchtoken = this.authService.getToken();
+        this.token = Fetchtoken ? Fetchtoken : '';
+        let httpReq = request.clone({
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: this.token,
+          }),
+        });
+        return next.handle(httpReq);
+      }
+      else{
+        this.authService.logout();
+        this.router.navigate(['/sign-in']);
+        this.spinner.hide();
+      }
 
-    if (request.url.search(loginReq) == -1) {
-      let Fetchtoken = this.authService.getToken();
-      this.token = Fetchtoken ? Fetchtoken : '';
-      console.log(this.token);
-      let httpReq = request.clone({
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: this.token,
-        }),
-      });
-      return next.handle(httpReq);
     }
     return next.handle(request);
   }
