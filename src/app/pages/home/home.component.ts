@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
   user: User = {} as User;
   LikePrivilege: LikeStatus = {} as LikeStatus;
   liking: boolean = false;
+  role: string | null = null;
   constructor(
     private toast: ToastrService,
     private commonService: CommonService,
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.role = localStorage.getItem('role')
     this.getCategory();
     this.fetchAllPost();
     this.signIn = this.authService.validUser();

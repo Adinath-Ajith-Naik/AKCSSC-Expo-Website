@@ -43,6 +43,7 @@ export class SigninComponent implements OnInit {
       (login: LoginResponse) => {
         if (login.acknowledgement.status === 'SUCCESS') {
           this.user = login.user;
+          localStorage.setItem('role',this.user.role);
           this.service.saveToken(this.user._id);
           this.commonService.saveUsername(this.user.username);
           localStorage.setItem('data',JSON.stringify(this.user));
