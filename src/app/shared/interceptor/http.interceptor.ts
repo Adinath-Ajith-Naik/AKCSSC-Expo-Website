@@ -25,7 +25,7 @@ export class HttpAPIInterceptor implements HttpInterceptor {
     const leaderboardReq ='/leaderboard';
     const likeAPI ='/post/like';
     const dislikeAPI ='/post/dislike';
-    if ((request.url.search(loginReq) == -1 && request.url.search(postReq) == -1 && request.url.search(catReq) == -1 && request.url.search(leaderboardReq) == -1) || (request.url.search(dislikeAPI) || request.url.search(likeAPI))) {
+    if ((request.url.search(loginReq) == -1 && request.url.search(postReq) == -1 && request.url.search(catReq) == -1 && request.url.search(leaderboardReq) == -1) || (request.url.search(dislikeAPI) != -1 || request.url.search(likeAPI)!= -1)) {
       if(this.authService.validUser()){
         let Fetchtoken = this.authService.getToken();
         this.token = Fetchtoken ? Fetchtoken : '';
