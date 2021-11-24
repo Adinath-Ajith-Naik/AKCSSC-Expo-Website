@@ -42,7 +42,6 @@ export class HttpAPIInterceptor implements HttpInterceptor {
         this.router.navigate(['/sign-in']);
         this.spinner.hide();
       }
-
     }
     return next.handle(request);
   }
