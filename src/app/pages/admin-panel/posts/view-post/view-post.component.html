@@ -35,10 +35,17 @@
                                 <div class="col-6"><strong> {{post.likes}} likes.</strong></div>
                             </div>
                             <div class="row">
-                                <div class="col-12" style="word-break: break-all; height: 350px;overflow-y: scroll;">
-                                    <strong>Desciption : </strong> {{post.caption}}
+                                <div class="col-12" style="word-break: break-all;overflow-y: scroll;">
+                                    <strong>Website : </strong>
+                                    <a href="https://{{post.caption.split(';')[0]}}">{{post.caption.split(';')[0]}}</a>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-12" style="word-break: break-all; height: 350px;overflow-y: scroll;">
+                                    <strong>Desciption : </strong> {{post.caption.split(';')[1]}}
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
