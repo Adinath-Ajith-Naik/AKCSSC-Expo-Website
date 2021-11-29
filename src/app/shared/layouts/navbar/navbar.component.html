@@ -9,8 +9,8 @@
                 <a class="nav-item nav-link active" routerLink="/home"><i class="uil uil-estate"></i> Home</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-item nav-link active" routerLink="/admin-panel" *ngIf="role && role === 'admin'"><i class="uil uil-cog"></i> Admin Panel</a>
-          </li>
+                <a class="nav-item nav-link active" routerLink="/admin-panel" *ngIf="role && role === 'admin'"><i class="uil uil-cog"></i> Admin Panel</a>
+            </li>
             <li class="nav-item active">
                 <a class="nav-item nav-link active" routerLink="/leaderboard"><i class="uil uil-trophy"></i> Leaderboard</a>
             </li>
@@ -27,7 +27,7 @@
         </ul>
         <!-- <a class="nav-item nav-link mr-0">LogIn/SignUp</a> -->
         <p class="pt-3"><strong>{{username}}</strong></p>
-        <button class="btn btn-round btn-warning mx-2" style="border-radius: 30px;" routerLink="/sign-in" *ngIf="!signIn">LogIn</button>
+        <!-- <button class="btn btn-round btn-warning mx-2" style="border-radius: 30px;" routerLink="/sign-in" *ngIf="!signIn">LogIn</button> -->
         <button class="btn btn-round btn-warning mx-2" style="border-radius: 30px;" routerLink="/sign-in" (click)="logOut()" *ngIf="signIn">Log Out</button>
         <!-- <a class="btn btn-round btn-warning mx-2" style="border-radius: 30px;" (click)="logOut()" *ngIf="login==='true'">Sign Out</a> -->
         <!-- <a class="btn btn-round btn-warning mx-2" style="border-radius: 30px;" routerLink="/my-account" *ngIf="userName==='mbcet'&& login==='true'">Profile</a> -->
